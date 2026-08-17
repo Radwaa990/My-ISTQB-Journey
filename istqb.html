@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISTQB Study Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ===================== TOKENS ===================== */
+:root{
+  --bg:#F7F3FF;
+  --bg-grad:
+    radial-gradient(700px 400px at 8% -5%, rgba(124,58,237,.14), transparent 60%),
+    radial-gradient(600px 380px at 100% 0%, rgba(255,59,140,.12), transparent 55%),
+    radial-gradient(500px 380px at 50% 110%, rgba(255,138,0,.10), transparent 55%),
+    #F7F3FF fixed;
+  --surface:#FFFFFF;
+  --surface-2:#F2ECFF;
+  --border:#E1D3FA;
+  --ink:#180B2E;
+  --ink-dim:#7A6D99;
+  --violet:#7C3AED;
+  --violet-2:#5B21B6;
+  --pink:#FF3B8C;
+  --orange:#FF8A00;
+  --accent-primary:#7C3AED;
+  --accent-primary-bg:#EFE4FF;
+  --accent-pass:#00A876;
+  --accent-pass-bg:#DEFBEF;
+  --accent-progress:#E67300;
+  --accent-progress-bg:#FFEBD6;
+  --accent-idle:#AFA3CC;
+  --accent-idle-bg:#F3EEFC;
+  --accent-fail:#E22B54;
+  --accent-fail-bg:#FFE1E8;
+  --accent-line:#7C3AED;
+  --accent-cyan:#0090B8;
+  --hype:linear-gradient(120deg,#7C3AED 0%, #FF3B8C 55%, #FF8A00 100%);
+  --display:'Space Grotesk', var(--sans);
+  --mono:'Space Mono', ui-monospace, 'SF Mono', monospace;
+  --sans:'Inter', system-ui, -apple-system, sans-serif;
+  --radius:10px;
+  --shadow:0 1px 2px rgba(24,11,46,.06),0 6px 18px rgba(24,11,46,.08);
+  --glow-pass:0 0 0 1px var(--accent-pass) inset, 0 0 14px rgba(0,168,118,.28);
+  --glow-prog:0 0 0 1px var(--accent-progress) inset, 0 0 14px rgba(230,115,0,.28);
+  --glow-primary:0 0 20px rgba(124,58,237,.35);
+}
+[data-theme="dark"]{
+  --bg:#0A0714;
+  --bg-grad:
+    radial-gradient(800px 460px at 6% -8%, rgba(180,144,255,.22), transparent 60%),
+    radial-gradient(700px 460px at 105% 0%, rgba(255,59,140,.18), transparent 55%),
+    radial-gradient(650px 460px at 45% 115%, rgba(255,138,0,.14), transparent 55%),
+    #0A0714 fixed;
+  --surface:#150E27;
+  --surface-2:#1C1433;
+  --border:#33265A;
+  --ink:#F6F1FF;
+  --ink-dim:#A99CCC;
+  --violet:#B490FF;
+  --violet-2:#8B5CF6;
+  --pink:#FF5FA8;
+  --orange:#FFA733;
+  --accent-primary:#B490FF;
+  --accent-primary-bg:#241A3D;
+  --accent-pass:#00F5A0;
+  --accent-pass-bg:#0F2E24;
+  --accent-progress:#FFB020;
+  --accent-progress-bg:#3A2A0A;
+  --accent-idle:#6C5F92;
+  --accent-idle-bg:#1C1433;
+  --accent-fail:#FF6688;
+  --accent-fail-bg:#3A1424;
+  --accent-line:#B490FF;
+  --accent-cyan:#4DE8FF;
+  --hype:linear-gradient(120deg,#B490FF 0%, #FF5FA8 55%, #FFA733 100%);
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 26px rgba(0,0,0,.45);
+  --glow-pass:0 0 0 1px var(--accent-pass) inset, 0 0 18px rgba(0,245,160,.35);
+  --glow-prog:0 0 0 1px var(--accent-progress) inset, 0 0 18px rgba(255,176,32,.32);
+  --glow-primary:0 0 26px rgba(180,144,255,.45);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg-grad);
+  background-color:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  transition:background-color .3s ease,color .3s ease;
+}
+@keyframes riseIn{
+  from{opacity:0; transform:translateY(12px);}
+  to{opacity:1; transform:translateY(0);}
+}
+@keyframes shimmer{
+  0%{background-position:0% 50%;}
+  100%{background-position:200% 50%;}
+}
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 0 10px rgba(124,58,237,.35);}
+  50%{box-shadow:0 0 22px rgba(255,59,140,.45);}
+}
+@keyframes floatY{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-4px);}
+}
+@keyframes confettiFall{
+  0%{transform:translateY(-10px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(420px) rotate(540deg);opacity:0;}
+}
+.main > *{animation:riseIn .45s cubic-bezier(.2,.7,.3,1) both;}
+.main > *:nth-child(1){animation-delay:.02s;}
+.main > *:nth-child(2){animation-delay:.06s;}
+.main > *:nth-child(3){animation-delay:.1s;}
+.main > *:nth-child(4){animation-delay:.14s;}
+.main > *:nth-child(5){animation-delay:.18s;}
+.main > *:nth-child(6){animation-delay:.22s;}
+h1,h2,h3,h4{font-family:var(--display);margin:0;letter-spacing:-.01em;}
+p{margin:0;}
+button{font-family:var(--sans);cursor:pointer;}
+a{color:inherit;}
+::selection{background:var(--accent-primary-bg);}
+:focus-visible{outline:2px solid var(--violet);outline-offset:2px;}
+
+/* ===================== LAYOUT ===================== */
+#app{display:flex;min-height:100vh;position:relative;}
+
+.sidebar{
+  width:252px;flex-shrink:0;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  padding:22px 16px;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.brand{
+  font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.06em;
+  color:var(--ink-dim);text-transform:uppercase;margin-bottom:4px;
+  display:flex;align-items:center;gap:6px;
+}
+.brand::before{content:"⚡";font-size:12px;}
+.brand-title{
+  font-family:var(--display);
+  font-size:21px;font-weight:800;margin-bottom:6px;letter-spacing:-.02em;
+  background:var(--hype);
+  background-size:220% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 6s linear infinite;
+}
+.streak-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-progress-bg);border:1px solid var(--accent-progress);border-radius:20px;
+  padding:5px 11px;margin-bottom:16px;font-family:var(--mono);font-size:11.5px;font-weight:700;
+  color:var(--accent-progress);animation:floatY 2.4s ease-in-out infinite;
+}
+.nav-group-label{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-dim);
+  text-transform:uppercase;margin:18px 4px 6px;opacity:.75;
+}
+.nav-link{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:8px;font-size:14px;font-weight:600;
+  color:var(--ink-dim);text-decoration:none;margin-bottom:2px;
+  border-left:2px solid transparent;transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease;
+}
+.nav-link:hover{background:var(--surface-2);color:var(--ink);transform:translateX(2px);}
+.nav-link.active{background:var(--accent-primary-bg);color:var(--violet);border-left-color:var(--violet);font-weight:700;}
+.nav-tag{
+  margin-left:auto;font-family:var(--mono);font-size:9.5px;padding:1px 5px;border-radius:3px;
+  border:1px solid var(--border);color:var(--ink-dim);
+}
+.nav-tag.pass{color:var(--accent-pass);border-color:var(--accent-pass);}
+.nav-tag.prog{color:var(--accent-progress);border-color:var(--accent-progress);}
+
+.main{flex:1;min-width:0;padding:28px 40px 80px;}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  margin-bottom:26px;flex-wrap:wrap;
+}
+.console-line{
+  font-family:var(--mono);font-size:12px;color:var(--ink-dim);letter-spacing:.02em;
+}
+.console-line b{color:var(--violet);font-weight:700;}
+
+.menu-btn{display:none;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:16px;}
+
+/* ===================== SHARED COMPONENTS ===================== */
+.badge{
+  font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.06em;
+  padding:4px 9px;border-radius:20px;text-transform:uppercase;white-space:nowrap;
+}
+.badge.pass{background:var(--accent-pass-bg);color:var(--accent-pass);box-shadow:var(--glow-pass);}
+.badge.prog{background:var(--accent-progress-bg);color:var(--accent-progress);box-shadow:var(--glow-prog);}
+.badge.idle{background:var(--accent-idle-bg);color:var(--accent-idle);}
+
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow);transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.segbar{display:flex;gap:5px;}
+.segbar .seg{flex:1;height:9px;border-radius:6px;background:var(--surface-2);border:1px solid var(--border);transition:all .2s ease;}
+.segbar .seg.pass{background:linear-gradient(90deg,var(--accent-pass),#00E5A0);border-color:var(--accent-pass);box-shadow:0 0 10px rgba(0,168,118,.5);}
+.segbar .seg.prog{background:linear-gradient(90deg,var(--accent-progress),#FFC24D);border-color:var(--accent-progress);box-shadow:0 0 10px rgba(230,115,0,.5);}
+
+/* HOME / HERO */
+.hero{
+  padding:30px 32px;margin-bottom:22px;position:relative;overflow:hidden;
+  background:var(--hype);border-color:transparent;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.5) 1.2px, transparent 1.6px);
+  background-size:24px 24px;opacity:.14;pointer-events:none;
+}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:16px;position:relative;}
+.hero h1{font-size:28px;font-weight:800;letter-spacing:-.02em;color:#FFFFFF;text-shadow:0 2px 12px rgba(0,0,0,.2);}
+.hero .sub{font-family:var(--mono);font-size:12.5px;color:rgba(255,255,255,.92);margin-top:6px;letter-spacing:.03em;font-weight:700;}
+.level-chip{
+  display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.22);
+  border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:5px 12px;
+  font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;margin-top:10px;
+}
+.readout{font-family:var(--mono);font-size:13px;text-align:right;color:rgba(255,255,255,.9);position:relative;}
+.readout .num{font-size:26px;font-weight:800;color:#fff;text-shadow:0 0 18px rgba(255,255,255,.6);font-family:var(--display);}
+.hero .segbar{position:relative;}
+.hero .segbar .seg{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);}
+.hero .segbar .seg.pass{background:#fff;border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.8);}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+.chapter-card{padding:18px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;}
+.chapter-card::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:var(--border);
+}
+.chapter-card.status-pass::before{background:linear-gradient(180deg,var(--accent-pass),#00E5A0);box-shadow:0 0 10px rgba(0,168,118,.5);}
+.chapter-card.status-prog::before{background:linear-gradient(180deg,var(--accent-progress),#FFC24D);box-shadow:0 0 10px rgba(230,115,0,.5);}
+.chapter-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 14px 30px rgba(124,58,237,.18);border-color:var(--violet);}
+.chapter-card .cc-top{display:flex;justify-content:space-between;align-items:center;}
+.cc-id{font-family:var(--mono);font-size:11px;color:var(--ink-dim);font-weight:700;}
+.cc-title{font-family:var(--display);font-size:16px;font-weight:700;margin-top:2px;}
+.cc-meta{font-family:var(--mono);font-size:11px;color:var(--ink-dim);}
+.cc-btn{
+  margin-top:4px;background:var(--surface-2);border:1px solid var(--border);color:var(--ink);
+  padding:9px 12px;border-radius:8px;font-size:13px;font-weight:700;text-align:center;
+  transition:background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+}
+.cc-btn:hover{border-color:var(--violet);background:var(--accent-primary-bg);color:var(--violet);transform:translateX(2px);}
+
+.quicklinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
+.quicklink{
+  flex:1;min-width:180px;padding:16px;display:flex;flex-direction:column;gap:6px;text-decoration:none;
+}
+.quicklink .ql-label{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.08em;font-weight:700;}
+.quicklink .ql-title{font-family:var(--display);font-size:15.5px;font-weight:700;}
+.quicklink:hover{border-color:var(--pink);transform:translateY(-3px);box-shadow:0 10px 22px rgba(255,59,140,.18);}
+
+/* CHAPTER PAGE */
+.chapter-header{
+  padding:24px 28px;margin-bottom:18px;position:relative;overflow:hidden;
+  background:var(--hype);border-color:transparent;
+}
+.chapter-header::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.5) 1.2px, transparent 1.6px);
+  background-size:24px 24px;opacity:.12;pointer-events:none;
+}
+.ch-eyebrow{font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.9);letter-spacing:.08em;text-transform:uppercase;position:relative;font-weight:700;}
+.ch-title{font-family:var(--display);font-size:25px;font-weight:800;margin-top:4px;letter-spacing:-.01em;color:#fff;position:relative;text-shadow:0 2px 10px rgba(0,0,0,.2);}
+.pipeline{display:flex;align-items:center;margin-top:18px;gap:0;flex-wrap:wrap;position:relative;}
+.pipe-step{display:flex;align-items:center;gap:8px;}
+.pipe-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0;transition:all .2s ease;}
+.pipe-dot.done{background:#fff;box-shadow:0 0 12px rgba(255,255,255,.9);}
+.pipe-dot.now{background:#FFE58A;box-shadow:0 0 12px rgba(255,229,138,.9);}
+.pipe-label{font-family:var(--mono);font-size:10.5px;color:rgba(255,255,255,.85);white-space:nowrap;font-weight:700;}
+.pipe-line{width:26px;height:1px;background:rgba(255,255,255,.3);margin:0 6px;}
+
+.section-block{padding:20px 24px;margin-bottom:14px;border-top:3px solid transparent;}
+.section-block:hover{border-top-color:var(--violet);}
+.section-block .sb-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sb-tag{
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.05em;
+  background:var(--accent-primary-bg);border:1px solid var(--violet);border-radius:6px;padding:3px 9px;color:var(--violet);
+}
+.sb-title{font-family:var(--display);font-size:17px;font-weight:700;}
+.sb-body{font-size:14.5px;line-height:1.65;color:var(--ink);}
+.sb-body ul{margin:0;padding-left:20px;}
+.sb-body li{margin-bottom:6px;}
+
+.def-list{display:grid;gap:10px;margin-top:6px;}
+.def-item{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:10px 0;border-top:1px solid var(--border);}
+.def-item:first-child{border-top:none;padding-top:0;}
+.def-term{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--pink);}
+.def-desc{font-size:13.5px;color:var(--ink);line-height:1.55;}
+
+.mindmap{list-style:none;margin:0;padding:0;}
+.mindmap li{
+  position:relative;padding:6px 0 6px 20px;font-size:13.5px;
+  border-left:1px dashed var(--border);margin-left:5px;
+}
+.mindmap li::before{content:"";position:absolute;left:-1px;top:15px;width:14px;height:1px;background:var(--violet);}
+.mindmap li:last-child{border-left:1px dashed transparent;}
+
+.diagram-wrap{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:14px;overflow-x:auto;}
+.diagram-wrap svg{display:block;width:100%;height:auto;min-width:520px;}
+
+.points-list{display:grid;gap:8px;}
+.point-row{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--surface-2);border-radius:8px;border:1px solid var(--border);border-left:3px solid var(--orange);transition:transform .15s ease;}
+.point-row:hover{transform:translateX(4px);}
+.point-num{font-family:var(--mono);font-size:11px;color:var(--orange);font-weight:700;flex-shrink:0;}
+.point-text{font-size:13.5px;line-height:1.55;}
+
+.qcase{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;background:var(--surface-2);}
+.qcase-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.qcase-id{font-family:var(--mono);font-size:11px;color:var(--violet);font-weight:700;}
+.qtext{font-family:var(--display);font-size:14.5px;font-weight:700;margin-bottom:10px;}
+.opt{
+  display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid var(--border);border-radius:8px;
+  margin-bottom:6px;font-size:13.5px;background:var(--surface);transition:border-color .15s ease, transform .1s ease;
+}
+.opt:hover{border-color:var(--violet);transform:translateX(2px);}
+.opt input{accent-color:var(--violet);}
+.opt.correct{border-color:var(--accent-pass);background:var(--accent-pass-bg);}
+.opt.wrong{border-color:var(--accent-fail);background:var(--accent-fail-bg);}
+.qresult{font-family:var(--mono);font-size:12px;margin-top:8px;padding:6px 10px;border-radius:6px;display:none;font-weight:700;}
+.qresult.show{display:block;}
+.qresult.pass{background:var(--accent-pass-bg);color:var(--accent-pass);}
+.qresult.fail{background:var(--accent-fail-bg);color:var(--accent-fail);}
+.explain{font-size:12.5px;color:var(--ink-dim);margin-top:6px;display:none;}
+.explain.show{display:block;}
+
+.btn{
+  font-weight:700;font-size:13.5px;padding:10px 16px;border-radius:10px;border:1px solid var(--border);
+  background:var(--surface);color:var(--ink);transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.btn:hover{border-color:var(--violet);transform:translateY(-1px);}
+.btn.primary{
+  background:var(--hype);
+  color:#fff;border-color:transparent;
+  box-shadow:0 6px 18px rgba(124,58,237,.35);
+}
+.btn.primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 24px rgba(255,59,140,.4);}
+.btn.small{padding:7px 12px;font-size:12.5px;}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+.assert-summary{font-family:var(--mono);font-size:12.5px;color:var(--ink-dim);margin:10px 0 14px;font-weight:700;}
+.complete-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+
+/* CHEAT SHEETS / IMPORTANT TOPICS */
+.cheat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.cheat-card{padding:16px 18px;}
+.cheat-card h3{font-family:var(--display);font-size:15px;margin-bottom:10px;}
+.cheat-card ul{margin:0;padding-left:18px;font-size:13px;line-height:1.6;color:var(--ink-dim);}
+.cheat-card li b{color:var(--violet);}
+
+.compare-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.compare-table th,.compare-table td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);}
+.compare-table th{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--violet);letter-spacing:.05em;}
+
+/* MOCK EXAM */
+.exam-summary-box{display:flex;gap:24px;flex-wrap:wrap;padding:20px 24px;margin-bottom:16px;}
+.exam-stat .n{font-family:var(--display);font-size:26px;font-weight:800;}
+.exam-stat .l{font-family:var(--mono);font-size:10.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.06em;}
+
+/* PROGRESS PAGE */
+.progress-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.progress-table th,.progress-table td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;}
+.progress-table th{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;color:var(--violet);letter-spacing:.06em;}
+
+/* SETTINGS */
+.settings-row{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+.settings-row:last-child{border-bottom:none;}
+.settings-row .s-title{font-family:var(--display);font-weight:700;font-size:14.5px;}
+.settings-row .s-desc{font-size:12.5px;color:var(--ink-dim);margin-top:2px;}
+.switch{position:relative;width:44px;height:25px;background:var(--surface-2);border:1px solid var(--border);border-radius:20px;flex-shrink:0;}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;background:var(--ink-dim);transition:transform .18s ease;}
+.switch.on{background:var(--accent-primary-bg);border-color:var(--violet);}
+.switch.on::after{transform:translateX(19px);background:var(--violet);}
+
+.footnote{font-family:var(--mono);font-size:11px;color:var(--ink-dim);margin-top:28px;text-align:center;}
+
+/* CONFETTI */
+#confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:999;overflow:hidden;}
+.confetti-piece{position:absolute;top:-10px;font-size:18px;animation:confettiFall 1.6s ease-in forwards;}
+
+/* RESPONSIVE */
+@media (max-width:860px){
+  .sidebar{position:fixed;left:0;top:0;z-index:40;transform:translateX(-100%);transition:transform .2s ease;box-shadow:var(--shadow);}
+  .sidebar.open{transform:translateX(0);}
+  .menu-btn{display:inline-flex;}
+  .main{padding:20px 16px 70px;}
+  .def-item{grid-template-columns:1fr;gap:4px;}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const CHAPTERS = [
+{
+  id:1, title:"Fundamentals of Testing", short:"Fundamentals",
+  notes:[
+    "Testing is the process of evaluating a component or system to find defects, verify it meets requirements, and build confidence that it works as intended.",
+    "Testing includes both static activities (reviewing documents, code, without running it) and dynamic activities (executing the software).",
+    "Testing is not the same as debugging: testers find and report failures; developers locate the defect that caused it and fix it.",
+    "A test basis is any document or knowledge testers use to derive test cases from — requirements, user stories, designs, risk analysis.",
+    "The Fundamental Test Process (FTP) has interleaved activities: test planning, monitoring & control, analysis, design, implementation, execution, and completion."
+  ],
+  definitions:[
+    {term:"Error", desc:"A human mistake that produces an incorrect result (e.g. a developer misreads a requirement)."},
+    {term:"Defect / Bug", desc:"A flaw in a component or system that can cause it to fail to perform its function — the result of an error in code or design."},
+    {term:"Failure", desc:"An event where a component or system does not perform as expected, caused by a defect being executed."},
+    {term:"Test case", desc:"A set of preconditions, inputs, actions and expected results, developed to verify a specific behavior."},
+    {term:"Test object", desc:"The component or system that is being tested."}
+  ],
+  mindmap:[
+    "Why testing is necessary — reduce risk, build confidence, satisfy contractual/legal/regulatory requirements",
+    "Testing vs. debugging — testers detect, developers diagnose & fix",
+    "Seven testing principles — see Important Points",
+    "Fundamental Test Process — plan → monitor & control → analyse → design → implement → execute → complete",
+    "Psychology of testing — independence improves defect-finding, but too much distance can hurt collaboration"
+  ],
+  diagram:"process",
+  diagramCaption:"The Fundamental Test Process — activities are logically sequenced but often overlap and iterate.",
+  points:[
+    "Testing shows the presence of defects — it can never prove a system is defect-free.",
+    "Exhaustive testing is impossible — except for trivial cases, so testing is always a matter of risk-based selection.",
+    "Early testing saves time and money — defects found earlier in the lifecycle are cheaper to fix.",
+    "Defects cluster together — a small number of modules usually contain most of the defects (Pareto principle).",
+    "Beware the pesticide paradox — repeating the same tests eventually stops finding new defects; tests must be revised.",
+    "Testing is context dependent — an e-commerce site and a pacemaker are tested very differently.",
+    "Absence-of-errors is a fallacy — a system that is defect-free can still fail if it doesn't meet the user's real needs."
+  ],
+  questions:[
+    {q:"Which statement correctly reflects one of the seven testing principles?",
+     options:["Testing can prove a system has no defects","Exhaustive testing is possible for any system","Testing shows the presence of defects, not their absence","More testing always finds more of the same defects"],
+     answer:2,
+     explain:"Testing can only reveal that defects exist — it can never prove their complete absence."},
+    {q:"A developer misunderstands a requirement and writes code that behaves incorrectly. What is the misunderstanding itself called?",
+     options:["A failure","A defect","An error","A risk"],
+     answer:2,
+     explain:"The human mistake (the misunderstanding) is the error. The resulting flaw in the code is the defect, and the visible incorrect behaviour is the failure."},
+    {q:"Which best distinguishes Quality Assurance (QA) from Quality Control (QC)?",
+     options:["QA is product-focused, QC is process-focused","QA is process-focused and preventive; QC is product-focused and detects issues in a specific product","QA and QC are two names for the same activity","QC happens only before coding starts"],
+     answer:1,
+     explain:"QA aims to prevent defects by improving processes; QC focuses on evaluating a specific product to detect defects in it."}
+  ]
+},
+{
+  id:2, title:"Testing Throughout the SDLC", short:"SDLC",
+  notes:[
+    "The way testing is organised depends on the software development lifecycle model in use — sequential (e.g. Waterfall, V-model) or iterative/incremental (e.g. Scrum, Kanban).",
+    "In sequential models, each test level has its own objectives and is mapped to a corresponding development phase.",
+    "In Agile, testing happens continuously alongside development, with a strong emphasis on shifting testing left and automating regression checks.",
+    "Good testing practice applies across models: every level should have clear objectives, testable requirements, and defined entry/exit criteria."
+  ],
+  definitions:[
+    {term:"Test level", desc:"A group of test activities organised together and managed as a unit (component, integration, system, acceptance)."},
+    {term:"Test type", desc:"A group of test activities aimed at testing specific characteristics, e.g. functional, non-functional, white-box, change-related."},
+    {term:"Verification", desc:"Confirms a work product meets its specification — 'are we building the product right?'"},
+    {term:"Validation", desc:"Confirms the finished product meets the user's needs — 'are we building the right product?'"},
+    {term:"Shift-left", desc:"Moving test activities as early as possible in the lifecycle to catch defects sooner."}
+  ],
+  mindmap:[
+    "Development models — sequential vs iterative-incremental, and how each shapes the test process",
+    "Four test levels — component, integration, system, acceptance",
+    "Acceptance testing types — user acceptance, operational, contract & regulatory, alpha & beta",
+    "Verification vs Validation",
+    "Maintenance testing — triggered by modification, migration or retirement of a system"
+  ],
+  diagram:"vmodel",
+  diagramCaption:"V-model: each development phase on the left has a corresponding test level on the right.",
+  points:[
+    "Component testing checks individual units/modules in isolation, often by developers.",
+    "Integration testing checks the interfaces and interactions between integrated components or systems.",
+    "System testing evaluates the complete, integrated system's behaviour against overall requirements.",
+    "Acceptance testing determines whether the system is ready for deployment and satisfies the user's needs.",
+    "UAT (user acceptance testing), operational acceptance, contractual/regulatory acceptance, and alpha/beta testing are the four common acceptance testing types."
+  ],
+  questions:[
+    {q:"In the V-model, which test level is typically paired with the 'system design' phase?",
+     options:["Component testing","Integration testing","System testing","Acceptance testing"],
+     answer:1,
+     explain:"System design defines how components interact, which is exactly what integration testing verifies."},
+    {q:"What is the main difference between verification and validation?",
+     options:["Verification checks the right product was built; validation checks it was built correctly","Verification checks a work product meets its spec; validation checks the product meets the user's actual needs","They are interchangeable terms","Validation only applies to acceptance testing"],
+     answer:1,
+     explain:"Verification = building the product right; Validation = building the right product."},
+    {q:"Beta testing is best described as:",
+     options:["Internal testing performed only by developers","Testing performed by potential or existing customers at their own location","A synonym for component testing","A static review technique"],
+     answer:1,
+     explain:"Beta testing is a type of acceptance testing carried out by real or potential customers in their own environment."}
+  ]
+},
+{
+  id:3, title:"Static Testing", short:"Static Testing",
+  notes:[
+    "Static testing examines a work product — requirements, design, code — without executing it.",
+    "It includes manual techniques (reviews) and automated techniques (static analysis tools).",
+    "Static testing can be applied very early, even before any code exists, which is why it supports the 'early testing' principle so directly.",
+    "Static analysis tools can find issues such as unreachable code, undeclared variables, and violations of coding standards."
+  ],
+  definitions:[
+    {term:"Review", desc:"A static technique where a work product is examined by people to detect defects and improve quality."},
+    {term:"Informal review", desc:"An unstructured review with no formal process — quick and cheap, but less rigorous."},
+    {term:"Walkthrough", desc:"The author guides participants through a document to gather feedback and build a shared understanding."},
+    {term:"Technical review", desc:"A structured review by technically qualified peers, focused on technical quality."},
+    {term:"Inspection", desc:"The most formal review type, following a defined process with trained moderators and metrics."}
+  ],
+  mindmap:[
+    "Static testing basics — examining work products without execution",
+    "Benefits — early defect detection, cheaper fixes, improved communication",
+    "Review types — informal, walkthrough, technical review, inspection (increasing formality)",
+    "Review process — planning, kick-off, individual review, review meeting, rework, follow-up",
+    "Static analysis — automated checks by tools rather than people"
+  ],
+  diagram:"review",
+  diagramCaption:"The formal review process flows from planning through to follow-up.",
+  points:[
+    "Static testing finds defects directly, rather than failures that need to be traced back to a cause.",
+    "The earlier a defect is caught via static testing, the cheaper it is to fix — often before any code is even written.",
+    "The formal review process has six phases: planning, kick-off, individual review, review meeting, rework, follow-up.",
+    "Roles in a formal review include: author, moderator/facilitator, reviewers, and scribe.",
+    "Static analysis tools are especially good at finding maintainability and security-related issues early."
+  ],
+  questions:[
+    {q:"Which of these is NOT a phase of the formal review process?",
+     options:["Kick-off","Individual review","Test execution","Follow-up"],
+     answer:2,
+     explain:"Test execution belongs to dynamic testing. The formal review process is planning, kick-off, individual review, review meeting, rework, and follow-up."},
+    {q:"Which review type is the most formal and structured?",
+     options:["Informal review","Walkthrough","Technical review","Inspection"],
+     answer:3,
+     explain:"Inspection is the most rigorous review type, using a defined process, trained moderators, and metrics."},
+    {q:"What is a key advantage of static testing over dynamic testing?",
+     options:["It can only be done after release","It can find defects before any code is executed","It replaces the need for test cases","It requires a fully working build"],
+     answer:1,
+     explain:"Static testing examines work products without running them, so it can start very early — even on requirements documents."}
+  ]
+},
+{
+  id:4, title:"Test Analysis and Design", short:"Test Analysis",
+  notes:[
+    "Test techniques help select a manageable, effective set of test cases from an infinite number of possibilities.",
+    "Black-box techniques derive tests from specifications, without looking at the internal code structure.",
+    "White-box techniques derive tests from the internal structure of the code, e.g. statement or branch coverage.",
+    "Experience-based techniques rely on tester knowledge and intuition, complementing the systematic techniques."
+  ],
+  definitions:[
+    {term:"Equivalence Partitioning (EP)", desc:"Divides data into partitions where all values are expected to be treated the same way by the system."},
+    {term:"Boundary Value Analysis (BVA)", desc:"Tests the edges of equivalence partitions, since defects often cluster at boundaries."},
+    {term:"Decision table testing", desc:"Tests combinations of conditions and the resulting actions, useful for complex business rules."},
+    {term:"State transition testing", desc:"Tests valid and invalid transitions between defined states of a system."},
+    {term:"Exploratory testing", desc:"An experience-based technique where test design and execution happen simultaneously, guided by learning."}
+  ],
+  mindmap:[
+    "Categories — black-box, white-box, experience-based",
+    "Black-box — equivalence partitioning, boundary value analysis, decision tables, state transitions, use case testing",
+    "White-box — statement coverage, branch/decision coverage",
+    "Experience-based — error guessing, exploratory testing, checklist-based testing",
+    "Coverage — measures how much of the test basis or code has been exercised"
+  ],
+  diagram:"boundary",
+  diagramCaption:"Boundary Value Analysis: test the min, min+1, nominal, max-1, and max values around each edge.",
+  points:[
+    "EP reduces an infinite input space to a small number of representative classes.",
+    "BVA is usually combined with EP — test just inside, on, and just outside each boundary.",
+    "Decision tables are ideal when business logic combines several independent conditions.",
+    "100% statement coverage means every line of code has been executed at least once; it does not guarantee 100% branch coverage.",
+    "Experience-based techniques are especially valuable when specifications are weak, incomplete, or missing."
+  ],
+  questions:[
+    {q:"A field accepts ages 18–65. Which pair of values is a correct application of Boundary Value Analysis?",
+     options:["18 and 65 only","17 and 66 only","17, 18, 65 and 66","Any two random values inside the range"],
+     answer:2,
+     explain:"BVA tests just outside and on each boundary: 17 (just below min), 18 (min), 65 (max), 66 (just above max)."},
+    {q:"Which technique is a white-box technique?",
+     options:["Equivalence partitioning","Decision table testing","Statement coverage","Exploratory testing"],
+     answer:2,
+     explain:"Statement coverage is derived from the internal code structure, making it a white-box technique."},
+    {q:"Decision table testing is most useful when:",
+     options:["There is only one input condition","Business rules combine multiple conditions that affect the outcome","Testing GUI layout only","No specification exists at all"],
+     answer:1,
+     explain:"Decision tables systematically cover combinations of conditions and their resulting actions."}
+  ]
+},
+{
+  id:5, title:"Managing the Test Activities", short:"Test Activities",
+  notes:[
+    "Test management covers planning, estimating, monitoring, and controlling test activities throughout the project.",
+    "A test approach defines how testing will be implemented, based on the test strategy, objectives, and risks.",
+    "Entry and exit criteria define when a test level can start and when it can be considered complete.",
+    "Risk-based testing prioritises test effort according to the likelihood and impact of potential problems."
+  ],
+  definitions:[
+    {term:"Test plan", desc:"A document describing the scope, approach, resources, and schedule of intended test activities."},
+    {term:"Exit criteria", desc:"The conditions that must be met before a test activity is declared complete."},
+    {term:"Product risk", desc:"The risk that the product itself may fail to meet stakeholder needs (a potential defect in the deliverable)."},
+    {term:"Project risk", desc:"A risk related to the management and execution of the project itself (e.g. delays, resourcing)."},
+    {term:"Configuration management", desc:"Ensures test items and their versions are uniquely identified, controlled, and traceable."}
+  ],
+  mindmap:[
+    "Test planning & estimation — approach, effort, schedule",
+    "Monitoring & control — comparing actual progress against the plan and adjusting",
+    "Risk-based testing — product risk vs project risk",
+    "Configuration management — traceability of versions and test items",
+    "Defect management — lifecycle from discovery to closure"
+  ],
+  diagram:"lifecycle",
+  diagramCaption:"A typical defect lifecycle, from discovery to closure (with a reopen path).",
+  points:[
+    "Entry criteria confirm a test level is ready to start (e.g. build available, environment ready).",
+    "Exit criteria confirm a test level can be declared finished (e.g. coverage target reached, no open critical defects).",
+    "Risk-based testing focuses effort on areas with the highest combination of likelihood and impact of failure.",
+    "A defect report typically includes: what happened, steps to reproduce, severity, priority, and the environment.",
+    "Metrics like defects found/fixed, test case pass rate, and coverage percentage support monitoring and control."
+  ],
+  questions:[
+    {q:"What best distinguishes product risk from project risk?",
+     options:["Product risk relates to schedule delays; project risk relates to code quality","Product risk is a potential defect in the deliverable; project risk threatens the project's ability to deliver","They are the same thing","Only project risk is relevant to testers"],
+     answer:1,
+     explain:"Product risk concerns the quality of what's being built; project risk concerns the ability to manage and deliver the project successfully."},
+    {q:"Exit criteria are used to:",
+     options:["Decide when a test level can start","Decide when a test level can be considered complete","Assign severity to a defect","Select which test technique to use"],
+     answer:1,
+     explain:"Exit criteria define the conditions that must be satisfied before a test activity is declared finished."},
+    {q:"In a defect lifecycle, what commonly happens after a defect is 'Fixed' and retested unsuccessfully?",
+     options:["It is immediately closed","It moves to 'Reopened'","It is deleted from the tracker","It becomes a project risk"],
+     answer:1,
+     explain:"If the retest fails, the defect is typically reopened and sent back for further investigation."}
+  ]
+},
+{
+  id:6, title:"Tool Support for Testing", short:"Tool Support",
+  notes:[
+    "Test tools can support one or more test activities: management, static analysis, design, execution, and monitoring.",
+    "Tools improve efficiency (running the same regression tests repeatedly) and enable tests that would be impractical manually (e.g. large-scale performance testing).",
+    "Introducing a tool has costs beyond purchase: training, integration, and maintenance of test scripts.",
+    "Tool selection should consider the organisation's needs, compatibility with existing systems, and a realistic pilot project."
+  ],
+  definitions:[
+    {term:"Test management tool", desc:"Supports planning, tracking, and reporting of test activities and results."},
+    {term:"Static analysis tool", desc:"Automatically examines code or models for defects without executing them."},
+    {term:"Test execution tool", desc:"Runs tests automatically, often replaying pre-recorded or scripted actions."},
+    {term:"CI (Continuous Integration)", desc:"A practice where code changes are frequently integrated and automatically built and tested."},
+    {term:"Performance testing tool", desc:"Simulates load to measure system response time, throughput, and stability."}
+  ],
+  mindmap:[
+    "Tool categories — management, static analysis, design, execution, performance & monitoring",
+    "Benefits — repeatability, efficiency, objective data",
+    "Risks — unrealistic expectations, underestimating effort to introduce and maintain a tool",
+    "Selecting a tool — needs assessment, proof of concept / pilot, ROI",
+    "Tools in DevOps/CI pipelines — automated tests as a quality gate"
+  ],
+  diagram:"tools",
+  diagramCaption:"Test tool categories mapped around the activities they support.",
+  points:[
+    "Tool benefits: reducing repetitive manual work, improving consistency, and providing objective measurement data.",
+    "Tool risks: overestimating the benefits, underestimating the effort to introduce, maintain, or upskill the team.",
+    "A pilot project helps validate a tool before organisation-wide rollout.",
+    "Test execution tools are most valuable for stable, frequently repeated test cases (regression suites).",
+    "In CI/CD pipelines, automated tests act as quality gates that block a broken build from progressing."
+  ],
+  questions:[
+    {q:"What is a common risk when introducing a new test tool?",
+     options:["Tests instantly become 100% reliable","Underestimating the effort needed for integration, scripting, and maintenance","There is never a need for training","Tools eliminate the need for a test strategy"],
+     answer:1,
+     explain:"Teams often underestimate the ongoing cost of maintaining scripts and integrating a tool with existing processes."},
+    {q:"Which tool category automatically re-runs pre-scripted tests?",
+     options:["Static analysis tool","Test execution tool","Requirements management tool","Configuration management tool"],
+     answer:1,
+     explain:"Test execution tools run predefined or recorded test scripts automatically, ideal for regression testing."},
+    {q:"In a CI/CD pipeline, automated tests primarily serve as:",
+     options:["A replacement for all manual testing forever","A quality gate that blocks broken builds from progressing","A static review technique","A substitute for requirements"],
+     answer:1,
+     explain:"Automated tests in CI/CD act as gates — if they fail, the build is stopped from moving further down the pipeline."}
+  ]
+}
+];
+
+/* ============================================================
+   STATE / STORAGE
+============================================================ */
+const STORE_KEY = "istqb_hub_state_v1";
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  const chapters = {};
+  CHAPTERS.forEach(c=>{
+    chapters[c.id] = {viewedSummary:false, viewedImages:false, viewedPoints:false, quizAnswers:{}, quizDone:false, quizScore:0, completed:false, lastStudied:null};
+  });
+  return {theme:"dark", chapters, mockHistory:[], streak:0, lastVisit:null};
+}
+let STATE = loadState();
+function saveState(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(STATE)); }catch(e){}
+}
+function chState(id){ return STATE.chapters[id]; }
+
+function chapterStatus(id){
+  const s = chState(id);
+  if(s.completed) return "pass";
+  if(s.viewedSummary || s.viewedImages || s.viewedPoints || s.quizDone) return "prog";
+  return "idle";
+}
+function statusLabel(st){ return st==="pass"?"PASSED":st==="prog"?"IN PROGRESS":"NOT STARTED"; }
+function passedCount(){ return CHAPTERS.filter(c=>chapterStatus(c.id)==="pass").length; }
+
+const LEVEL_TITLES = ["Rookie Tester","Bug Hunter","Test Strategist","Defect Detective","QA Specialist","Almost Certified","ISTQB Legend"];
+function levelTitle(){ return LEVEL_TITLES[Math.min(passedCount(), LEVEL_TITLES.length-1)]; }
+
+function updateStreak(){
+  const today = new Date().toDateString();
+  if(STATE.lastVisit === today) return;
+  const yesterday = new Date(Date.now()-86400000).toDateString();
+  if(STATE.lastVisit === yesterday){ STATE.streak = (STATE.streak||0)+1; }
+  else { STATE.streak = 1; }
+  STATE.lastVisit = today;
+  saveState();
+}
+
+const HYPE_LINES = ["LET'S GO 🔥","CRUSHED IT 💪","YOU'RE ON FIRE 🚀","CERTIFIED GRINDSET 🧠","ANOTHER ONE 🎯","BUILT DIFFERENT 😤"];
+function randomHype(){ return HYPE_LINES[Math.floor(Math.random()*HYPE_LINES.length)]; }
+
+function fireConfetti(){
+  let layer = document.getElementById("confetti-layer");
+  if(!layer){
+    layer = document.createElement("div");
+    layer.id = "confetti-layer";
+    document.body.appendChild(layer);
+  }
+  const emojis = ["🎉","✨","🔥","💜","🧡","⭐","💪"];
+  for(let i=0;i<28;i++){
+    const el = document.createElement("div");
+    el.className = "confetti-piece";
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left = Math.random()*100 + "vw";
+    el.style.animationDelay = (Math.random()*0.3)+"s";
+    el.style.animationDuration = (1.2 + Math.random()*0.8)+"s";
+    el.style.fontSize = (14 + Math.random()*14)+"px";
+    layer.appendChild(el);
+    setTimeout(()=>el.remove(), 2200);
+  }
+}
+
+/* ============================================================
+   SVG DIAGRAMS
+============================================================ */
+function svgWrap(inner, vb){ return `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg" fill="none">${inner}</svg>`; }
+
+function pipelineDiagram(stages){
+  const w=110,h=52,gap=26,startX=10,y=40;
+  let boxes="", arrows="";
+  stages.forEach((label,i)=>{
+    const x = startX + i*(w+gap);
+    boxes += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="var(--surface)" stroke="var(--accent-line)" stroke-width="1.5"/>
+      <text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--ink)">${label}</text>`;
+    if(i < stages.length-1){
+      const ax = x+w, ax2 = x+w+gap;
+      arrows += `<line x1="${ax}" y1="${y+h/2}" x2="${ax2-6}" y2="${y+h/2}" stroke="var(--ink-dim)" stroke-width="1.5"/>
+        <polygon points="${ax2-6},${y+h/2-4} ${ax2},${y+h/2} ${ax2-6},${y+h/2+4}" fill="var(--ink-dim)"/>`;
+    }
+  });
+  const totalW = startX*2 + stages.length*w + (stages.length-1)*gap;
+  return svgWrap(boxes+arrows, `0 0 ${totalW} 110`);
+}
+
+function vmodelDiagram(){
+  const left = [["Requirements","20,20"],["System Design","70,60"],["Architecture Design","120,100"],["Module Design","170,140"]];
+  const right = [["Acceptance Testing","330,20"],["System Testing","280,60"],["Integration Testing","230,100"],["Component Testing","180,140"]];
+  let s="";
+  const coordsL = [[40,30],[90,70],[140,110],[190,150]];
+  const labelsL = ["Requirements Analysis","System Design","Architecture Design","Module Design"];
+  const coordsR = [[430,30],[380,70],[330,110],[280,150]];
+  const labelsR = ["Acceptance Testing","System Testing","Integration Testing","Component Testing"];
+  const bottom = [235,185];
+  s += `<line x1="${coordsL[0][0]}" y1="${coordsL[0][1]}" x2="${bottom[0]}" y2="${bottom[1]}" stroke="var(--accent-line)" stroke-width="2"/>`;
+  for(let i=0;i<coordsL.length-1;i++){
+    s+=`<line x1="${coordsL[i][0]}" y1="${coordsL[i][1]}" x2="${coordsL[i+1][0]}" y2="${coordsL[i+1][1]}" stroke="var(--accent-line)" stroke-width="2"/>`;
+  }
+  s += `<line x1="${bottom[0]}" y1="${bottom[1]}" x2="${coordsR[coordsR.length-1][0]}" y2="${coordsR[coordsR.length-1][1]}" stroke="var(--accent-pass)" stroke-width="2"/>`;
+  for(let i=coordsR.length-1;i>0;i--){
+    s+=`<line x1="${coordsR[i][0]}" y1="${coordsR[i][1]}" x2="${coordsR[i-1][0]}" y2="${coordsR[i-1][1]}" stroke="var(--accent-pass)" stroke-width="2"/>`;
+  }
+  coordsL.forEach((c,i)=>{
+    s+=`<circle cx="${c[0]}" cy="${c[1]}" r="4" fill="var(--accent-line)"/>
+        <text x="${c[0]-8}" y="${c[1]-8}" text-anchor="end" font-family="var(--mono)" font-size="10" fill="var(--ink)">${labelsL[i]}</text>`;
+  });
+  coordsR.forEach((c,i)=>{
+    s+=`<circle cx="${c[0]}" cy="${c[1]}" r="4" fill="var(--accent-pass)"/>
+        <text x="${c[0]+8}" y="${c[1]-8}" text-anchor="start" font-family="var(--mono)" font-size="10" fill="var(--ink)">${labelsR[i]}</text>`;
+  });
+  s+=`<circle cx="${bottom[0]}" cy="${bottom[1]}" r="4" fill="var(--accent-progress)"/>
+      <text x="${bottom[0]}" y="${bottom[1]+18}" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink)">Coding</text>`;
+  return svgWrap(s, `0 0 470 200`);
+}
+
+function boundaryDiagram(){
+  const y=60, x0=30, x1=470;
+  let s = `<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="var(--ink-dim)" stroke-width="2"/>`;
+  const points = [
+    {x:70,label:"17",tag:"min-1",color:"var(--accent-fail)"},
+    {x:160,label:"18",tag:"min",color:"var(--accent-pass)"},
+    {x:250,label:"...",tag:"nominal",color:"var(--ink-dim)"},
+    {x:340,label:"65",tag:"max",color:"var(--accent-pass)"},
+    {x:430,label:"66",tag:"max+1",color:"var(--accent-fail)"}
+  ];
+  points.forEach(p=>{
+    s += `<line x1="${p.x}" y1="${y-8}" x2="${p.x}" y2="${y+8}" stroke="${p.color}" stroke-width="2.5"/>
+      <text x="${p.x}" y="${y-16}" text-anchor="middle" font-family="var(--mono)" font-size="12" font-weight="700" fill="${p.color}">${p.label}</text>
+      <text x="${p.x}" y="${y+26}" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--ink-dim)">${p.tag}</text>`;
+  });
+  s += `<rect x="160" y="${y-3}" width="180" height="6" fill="var(--accent-pass-bg)" opacity="0.6"/>`;
+  return svgWrap(s, `0 0 500 110`);
+}
+
+function lifecycleDiagram(){
+  const nodes = [
+    {label:"New", x:60, y:70},
+    {label:"Assigned", x:180, y:70},
+    {label:"Fixed", x:300, y:70},
+    {label:"Retest", x:420, y:70},
+    {label:"Closed", x:540, y:70}
+  ];
+  let s="";
+  for(let i=0;i<nodes.length-1;i++){
+    const a=nodes[i], b=nodes[i+1];
+    s += `<line x1="${a.x+38}" y1="${a.y}" x2="${b.x-38}" y2="${b.y}" stroke="var(--ink-dim)" stroke-width="1.5"/>
+      <polygon points="${b.x-38},${b.y-4} ${b.x-32},${b.y} ${b.x-38},${b.y+4}" fill="var(--ink-dim)"/>`;
+  }
+  s += `<path d="M420,52 C 380,-10 220,-10 180,52" stroke="var(--accent-progress)" stroke-width="1.5" fill="none"/>
+    <polygon points="186,58 178,50 190,48" fill="var(--accent-progress)"/>
+    <text x="300" y="10" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--accent-progress)">Reopened</text>`;
+  nodes.forEach(n=>{
+    const color = n.label==="Closed" ? "var(--accent-pass)" : "var(--accent-line)";
+    s += `<circle cx="${n.x}" cy="${n.y}" r="34" fill="var(--surface)" stroke="${color}" stroke-width="2"/>
+      <text x="${n.x}" y="${n.y+4}" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--ink)">${n.label}</text>`;
+  });
+  return svgWrap(s, `0 0 600 130`);
+}
+
+function toolsDiagram(){
+  const center = {x:260,y:100};
+  const items = [
+    {label:"Management", x:260, y:20},
+    {label:"Static Analysis", x:420, y:60},
+    {label:"Test Design", x:460, y:150},
+    {label:"Execution", x:340,y:190},
+    {label:"Performance", x:150,y:190},
+    {label:"CI / DevOps", x:60,y:110}
+  ];
+  let s = `<circle cx="${center.x}" cy="${center.y}" r="42" fill="var(--accent-line)" opacity="0.12" stroke="var(--accent-line)" stroke-width="2"/>
+    <text x="${center.x}" y="${center.y+4}" text-anchor="middle" font-family="var(--mono)" font-size="11.5" font-weight="700" fill="var(--accent-line)">Test Tools</text>`;
+  items.forEach(it=>{
+    s += `<line x1="${center.x}" y1="${center.y}" x2="${it.x}" y2="${it.y}" stroke="var(--border)" stroke-width="1.5"/>
+      <rect x="${it.x-46}" y="${it.y-16}" width="92" height="32" rx="6" fill="var(--surface)" stroke="var(--accent-pass)" stroke-width="1.5"/>
+      <text x="${it.x}" y="${it.y+4}" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--ink)">${it.label}</text>`;
+  });
+  return svgWrap(s, `0 0 520 220`);
+}
+
+function diagramFor(key){
+  switch(key){
+    case "process": return pipelineDiagram(["Planning","Monitor &amp; Control","Analysis","Design","Implementation","Execution","Completion"]);
+    case "review": return pipelineDiagram(["Planning","Kick-off","Individual Review","Review Meeting","Rework","Follow-up"]);
+    case "vmodel": return vmodelDiagram();
+    case "boundary": return boundaryDiagram();
+    case "lifecycle": return lifecycleDiagram();
+    case "tools": return toolsDiagram();
+    default: return "";
+  }
+}
+
+/* ============================================================
+   ROUTER
+============================================================ */
+function currentRoute(){
+  const h = location.hash.replace("#","") || "home";
+  return h;
+}
+
+function navigate(route){
+  location.hash = route;
+}
+
+window.addEventListener("hashchange", render);
+window.addEventListener("DOMContentLoaded", ()=>{
+  document.documentElement.setAttribute("data-theme", STATE.theme || "dark");
+  updateStreak();
+  render();
+});
+
+/* ============================================================
+   RENDER: SHELL
+============================================================ */
+function navItems(){
+  const chapterLinks = CHAPTERS.map(c=>{
+    const st = chapterStatus(c.id);
+    const tag = st==="pass" ? `<span class="nav-tag pass">PASS</span>` : st==="prog" ? `<span class="nav-tag prog">...</span>` : "";
+    return `<a class="nav-link" data-route="chapter-${c.id}" href="#chapter-${c.id}">📚 ${c.short} ${tag}</a>`;
+  }).join("");
+  return `
+    <a class="nav-link" data-route="home" href="#home">🏠 Home</a>
+    <div class="nav-group-label">Chapters</div>
+    ${chapterLinks}
+    <div class="nav-group-label">Study Tools</div>
+    <a class="nav-link" data-route="cheatsheets" href="#cheatsheets">📝 Cheat Sheets</a>
+    <a class="nav-link" data-route="important" href="#important">⭐ Important Topics</a>
+    <a class="nav-link" data-route="mock" href="#mock">❓ Mock Exams</a>
+    <div class="nav-group-label">Account</div>
+    <a class="nav-link" data-route="progress" href="#progress">📈 Progress</a>
+    <a class="nav-link" data-route="settings" href="#settings">⚙️ Settings</a>
+  `;
+}
+
+function shell(contentHtml, route){
+  return `
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">CTFL · v4.0</div>
+    <div class="brand-title">ISTQB Study Hub</div>
+    <div class="streak-pill">🔥 ${STATE.streak||0}-day streak · ${levelTitle()}</div>
+    ${navItems()}
+  </nav>
+  <main class="main">
+    ${contentHtml}
+  </main>
+  `;
+}
+
+function markActive(route){
+  document.querySelectorAll(".nav-link").forEach(a=>{
+    a.classList.toggle("active", a.dataset.route === route);
+  });
+}
+
+/* ============================================================
+   RENDER: HOME
+============================================================ */
+function renderHome(){
+  const passed = passedCount();
+  const segs = CHAPTERS.map(c=>`<div class="seg ${chapterStatus(c.id)}"></div>`).join("");
+  const cards = CHAPTERS.map(c=>{
+    const st = chapterStatus(c.id);
+    const s = chState(c.id);
+    return `
+    <div class="card chapter-card status-${st}">
+      <div class="cc-top">
+        <span class="cc-id">SUITE 0${c.id}</span>
+        <span class="badge ${st}">${statusLabel(st)}</span>
+      </div>
+      <div class="cc-title">${c.title}</div>
+      <div class="cc-meta">${s.quizDone ? `Quiz: ${s.quizScore}/${c.questions.length}` : "Quiz: not attempted"}</div>
+      <a class="cc-btn" href="#chapter-${c.id}">Open Suite →</a>
+    </div>`;
+  }).join("");
+
+  return `
+  <div class="topbar">
+    <div class="console-line">SYSTEM &gt; <b>istqb-hub</b> &gt; ${randomHype()}</div>
+  </div>
+  <div class="card hero">
+    <div class="hero-top">
+      <div>
+        <h1>ISTQB Study Hub</h1>
+        <div class="sub">🔥 ${STATE.streak||0}-day streak · currently ranked ${levelTitle()}</div>
+      </div>
+      <div class="readout">
+        <div class="num">${passed}/${CHAPTERS.length}</div>
+        <div>SUITES PASSED</div>
+      </div>
+    </div>
+    <div class="segbar">${segs}</div>
+  </div>
+  <div class="grid">${cards}</div>
+  <div class="quicklinks">
+    <a class="card quicklink" href="#cheatsheets"><span class="ql-label">Reference</span><span class="ql-title">📝 Cheat Sheets</span></a>
+    <a class="card quicklink" href="#important"><span class="ql-label">Core Concepts</span><span class="ql-title">⭐ Important Topics</span></a>
+    <a class="card quicklink" href="#mock"><span class="ql-label">Self-check</span><span class="ql-title">❓ Mock Exam</span></a>
+    <a class="card quicklink" href="#progress"><span class="ql-label">Overview</span><span class="ql-title">📈 Your Progress</span></a>
+  </div>
+  `;
+}
+
+/* ============================================================
+   RENDER: CHAPTER
+============================================================ */
+function renderChapter(id){
+  const c = CHAPTERS.find(ch=>ch.id===id);
+  if(!c) return `<p>Chapter not found.</p>`;
+  const s = chState(id);
+  const st = chapterStatus(id);
+
+  const steps = [
+    {key:"summary", label:"Summary", done:s.viewedSummary},
+    {key:"images", label:"Diagrams", done:s.viewedImages},
+    {key:"points", label:"Key Points", done:s.viewedPoints},
+    {key:"quiz", label:"Test Cases", done:s.quizDone},
+    {key:"complete", label:"Result", done:s.completed}
+  ];
+  const pipe = steps.map((st2,i)=>{
+    const dotClass = st2.done ? "done" : "";
+    return `<div class="pipe-step"><span class="pipe-dot ${dotClass}"></span><span class="pipe-label">${st2.label}</span></div>${i<steps.length-1?'<span class="pipe-line"></span>':''}`;
+  }).join("");
+
+  const defs = c.definitions.map(d=>`<div class="def-item"><div class="def-term">${d.term}</div><div class="def-desc">${d.desc}</div></div>`).join("");
+  const notesLi = c.notes.map(n=>`<li>${n}</li>`).join("");
+  const mindLi = c.mindmap.map(m=>`<li>${m}</li>`).join("");
+  const pointsHtml = c.points.map((p,i)=>`<div class="point-row"><span class="point-num">P${i+1}</span><span class="point-text">${p}</span></div>`).join("");
+
+  const questionsHtml = c.questions.map((q,i)=>{
+    const qid = `c${c.id}q${i}`;
+    const savedAns = s.quizAnswers[i];
+    const opts = q.options.map((opt,oi)=>{
+      let cls="opt";
+      if(savedAns!==undefined){
+        if(oi===q.answer) cls+=" correct";
+        else if(oi===savedAns && savedAns!==q.answer) cls+=" wrong";
+      }
+      return `<label class="${cls}"><input type="radio" name="${qid}" value="${oi}" ${savedAns===oi?"checked":""} ${savedAns!==undefined?"disabled":""} onchange="selectAnswer(${c.id},${i},this.value)"> ${opt}</label>`;
+    }).join("");
+    const resultShown = savedAns!==undefined;
+    const isCorrect = savedAns===q.answer;
+    return `
+    <div class="qcase">
+      <div class="qcase-head"><span class="qcase-id">TEST_CASE_${i+1}</span></div>
+      <div class="qtext">${q.q}</div>
+      ${opts}
+      <div class="qresult ${resultShown?'show':''} ${isCorrect?'pass':'fail'}">${resultShown ? (isCorrect? "✓ ASSERT PASSED" : "✗ ASSERT FAILED — expected: "+q.options[q.answer]) : ""}</div>
+      <div class="explain ${resultShown?'show':''}">${q.explain}</div>
+    </div>`;
+  }).join("");
+
+  const answeredCount = Object.keys(s.quizAnswers).length;
+  const correctCount = Object.keys(s.quizAnswers).filter(k=>s.quizAnswers[k]===c.questions[k].answer).length;
+
+  return `
+  <div class="topbar">
+    <div class="console-line">SUITE &gt; <b>0${c.id} · ${c.title}</b></div>
+  </div>
+  <div class="card chapter-header">
+    <div class="ch-eyebrow">CTFL · SUITE 0${c.id}</div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <h2 class="ch-title">${c.title}</h2>
+      <span class="badge ${st}">${statusLabel(st)}</span>
+    </div>
+    <div class="pipeline">${pipe}</div>
+  </div>
+
+  <div class="card section-block" id="sec-summary">
+    <div class="sb-head"><span class="sb-tag">[NOTES]</span><span class="sb-title">Summary</span></div>
+    <div class="sb-body">
+      <ul>${notesLi}</ul>
+      <h4 style="margin:16px 0 8px;font-size:13px;">Definitions</h4>
+      <div class="def-list">${defs}</div>
+      <h4 style="margin:16px 0 8px;font-size:13px;">Mind Map</h4>
+      <ul class="mindmap">${mindLi}</ul>
+    </div>
+  </div>
+
+  <div class="card section-block" id="sec-images">
+    <div class="sb-head"><span class="sb-tag">[DIAGRAM]</span><span class="sb-title">Images &amp; Diagrams</span></div>
+    <div class="diagram-wrap">${diagramFor(c.diagram)}</div>
+    <p style="font-size:12.5px;color:var(--ink-dim);margin-top:10px;font-family:var(--mono);">${c.diagramCaption}</p>
+  </div>
+
+  <div class="card section-block" id="sec-points">
+    <div class="sb-head"><span class="sb-tag">[KEY_POINTS]</span><span class="sb-title">Important Points</span></div>
+    <div class="points-list">${pointsHtml}</div>
+  </div>
+
+  <div class="card section-block" id="sec-quiz">
+    <div class="sb-head"><span class="sb-tag">[TEST_CASES]</span><span class="sb-title">Practice Questions</span></div>
+    ${questionsHtml}
+    <div class="assert-summary">ASSERTIONS: ${correctCount}/${c.questions.length} passed · ${answeredCount}/${c.questions.length} answered</div>
+    ${answeredCount < c.questions.length ? `<div style="font-size:12.5px;color:var(--ink-dim);">Answer every test case to unlock suite completion.</div>` : ""}
+  </div>
+
+  <div class="card section-block" id="sec-complete">
+    <div class="sb-head"><span class="sb-tag">[RESULT]</span><span class="sb-title">Suite Completion</span></div>
+    <div class="complete-row">
+      <div style="font-size:13.5px;color:var(--ink-dim);">
+        ${s.completed ? "✅ This suite is marked as passed. Progress saved." : "Mark this suite as passed once you've reviewed the material."}
+      </div>
+      <button class="btn primary" ${s.completed?"disabled":""} onclick="completeChapter(${c.id})">
+        ${s.completed ? "Suite Passed ✓" : "Mark Suite as Passed"}
+      </button>
+    </div>
+  </div>
+  `;
+}
+
+function selectAnswer(chapterId, qIndex, value){
+  const s = chState(chapterId);
+  s.quizAnswers[qIndex] = parseInt(value,10);
+  const c = CHAPTERS.find(ch=>ch.id===chapterId);
+  const wasDone = s.quizDone;
+  if(Object.keys(s.quizAnswers).length === c.questions.length) s.quizDone = true;
+  s.lastStudied = Date.now();
+  saveState();
+  render();
+  if(!wasDone && s.quizDone){
+    const correct = Object.keys(s.quizAnswers).filter(k=>s.quizAnswers[k]===c.questions[k].answer).length;
+    if(correct === c.questions.length) fireConfetti();
+  }
+}
+
+function completeChapter(id){
+  const s = chState(id);
+  s.completed = true;
+  s.lastStudied = Date.now();
+  saveState();
+  fireConfetti();
+  render();
+}
+
+/* track section views via IntersectionObserver-lite (simple scroll check) */
+function markViewed(id){
+  const s = chState(id);
+  let changed=false;
+  ["sec-summary","sec-images","sec-points"].forEach(secId=>{
+    const el = document.getElementById(secId);
+    if(!el) return;
+    const key = secId==="sec-summary"?"viewedSummary":secId==="sec-images"?"viewedImages":"viewedPoints";
+    if(!s[key]){ s[key]=true; changed=true; }
+  });
+  if(changed){ s.lastStudied = Date.now(); saveState(); }
+}
+
+/* ============================================================
+   RENDER: CHEAT SHEETS
+============================================================ */
+function renderCheatSheets(){
+  const cards = CHAPTERS.map(c=>{
+    const items = c.definitions.map(d=>`<li><b>${d.term}:</b> ${d.desc}</li>`).join("");
+    return `<div class="card cheat-card">
+      <div class="cc-id" style="margin-bottom:4px;">SUITE 0${c.id}</div>
+      <h3>${c.title}</h3>
+      <ul>${items}</ul>
+    </div>`;
+  }).join("");
+  return `
+  <div class="topbar"><div class="console-line">TOOLS &gt; <b>cheat-sheets</b></div></div>
+  <h2 style="font-size:20px;margin-bottom:14px;">📝 Cheat Sheets</h2>
+  <div class="cheat-grid">${cards}</div>
+  `;
+}
+
+/* ============================================================
+   RENDER: IMPORTANT TOPICS
+============================================================ */
+function renderImportant(){
+  const principles = CHAPTERS[0].points.map((p,i)=>`<div class="point-row"><span class="point-num">${i+1}</span><span class="point-text">${p}</span></div>`).join("");
+  return `
+  <div class="topbar"><div class="console-line">TOOLS &gt; <b>important-topics</b></div></div>
+  <h2 style="font-size:20px;margin-bottom:14px;">⭐ Important Topics</h2>
+
+  <div class="card section-block">
+    <div class="sb-head"><span class="sb-tag">[CORE]</span><span class="sb-title">The Seven Principles of Testing</span></div>
+    <div class="points-list">${principles}</div>
+  </div>
+
+  <div class="card section-block">
+    <div class="sb-head"><span class="sb-tag">[COMPARE]</span><span class="sb-title">Error vs. Defect vs. Failure</span></div>
+    <table class="compare-table">
+      <tr><th>Term</th><th>What it is</th><th>Example</th></tr>
+      <tr><td><b>Error</b></td><td>A human mistake</td><td>Developer misreads a requirement</td></tr>
+      <tr><td><b>Defect</b></td><td>A flaw in the code/system caused by the error</td><td>Wrong condition in an if-statement</td></tr>
+      <tr><td><b>Failure</b></td><td>Observable incorrect behaviour when the defect is executed</td><td>App crashes on a specific input</td></tr>
+    </table>
+  </div>
+
+  <div class="card section-block">
+    <div class="sb-head"><span class="sb-tag">[COMPARE]</span><span class="sb-title">QA vs. QC</span></div>
+    <table class="compare-table">
+      <tr><th></th><th>Quality Assurance (QA)</th><th>Quality Control (QC)</th></tr>
+      <tr><td><b>Focus</b></td><td>Process</td><td>Product</td></tr>
+      <tr><td><b>Goal</b></td><td>Prevent defects</td><td>Detect defects</td></tr>
+      <tr><td><b>Nature</b></td><td>Proactive</td><td>Reactive</td></tr>
+    </table>
+  </div>
+
+  <div class="card section-block">
+    <div class="sb-head"><span class="sb-tag">[COMPARE]</span><span class="sb-title">Verification vs. Validation</span></div>
+    <table class="compare-table">
+      <tr><th>Verification</th><th>Validation</th></tr>
+      <tr><td>Are we building the product right?</td><td>Are we building the right product?</td></tr>
+      <tr><td>Checked against specification</td><td>Checked against user needs</td></tr>
+    </table>
+  </div>
+  `;
+}
+
+/* ============================================================
+   RENDER: MOCK EXAM
+============================================================ */
+let mockState = null; // {questions:[{chId,qIndex,q,options,answer,explain}], answers:{}, submitted:false}
+
+function buildMockPool(){
+  const pool=[];
+  CHAPTERS.forEach(c=>{
+    c.questions.forEach((q,qi)=>{
+      pool.push({chId:c.id, chTitle:c.short, qIndex:qi, q:q.q, options:q.options, answer:q.answer, explain:q.explain});
+    });
+  });
+  return pool;
+}
+
+function startMock(){
+  const pool = buildMockPool();
+  for(let i=pool.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [pool[i],pool[j]] = [pool[j],pool[i]];
+  }
+  mockState = {questions: pool.slice(0,10), answers:{}, submitted:false};
+  render();
+}
+
+function mockSelect(i, val){
+  mockState.answers[i] = parseInt(val,10);
+  render();
+}
+
+function submitMock(){
+  mockState.submitted = true;
+  const total = mockState.questions.length;
+  let correct = 0;
+  mockState.questions.forEach((q,i)=>{ if(mockState.answers[i]===q.answer) correct++; });
+  STATE.mockHistory.push({date:Date.now(), score:correct, total});
+  saveState();
+  render();
+  if(correct/total >= 0.65) fireConfetti();
+}
+
+function renderMock(){
+  if(!mockState){
+    const lastRuns = STATE.mockHistory.slice(-5).reverse().map(h=>{
+      const d = new Date(h.date);
+      return `<tr><td>${d.toLocaleDateString()}</td><td>${h.score}/${h.total}</td><td>${Math.round(h.score/h.total*100)}%</td></tr>`;
+    }).join("");
+    return `
+    <div class="topbar"><div class="console-line">TOOLS &gt; <b>mock-exam</b></div></div>
+    <h2 style="font-size:20px;margin-bottom:14px;">❓ Mock Exams</h2>
+    <div class="card section-block">
+      <div class="sb-head"><span class="sb-tag">[EXAM]</span><span class="sb-title">10-question randomized mock exam</span></div>
+      <p class="sb-body">Pulls 10 random questions from all 6 suites. Real ISTQB CTFL passing score is 65%. Same threshold applies here (7/10).</p>
+      <div style="margin-top:14px;"><button class="btn primary" onclick="startMock()">Start Mock Exam</button></div>
+    </div>
+    ${STATE.mockHistory.length ? `
+    <div class="card section-block">
+      <div class="sb-head"><span class="sb-tag">[HISTORY]</span><span class="sb-title">Recent attempts</span></div>
+      <table class="progress-table"><tr><th>Date</th><th>Score</th><th>%</th></tr>${lastRuns}</table>
+    </div>` : ""}
+    `;
+  }
+
+  const total = mockState.questions.length;
+  const answeredCount = Object.keys(mockState.answers).length;
+  const correct = mockState.submitted ? mockState.questions.filter((q,i)=>mockState.answers[i]===q.answer).length : 0;
+  const pct = mockState.submitted ? Math.round(correct/total*100) : 0;
+  const passed = pct >= 65;
+
+  const qs = mockState.questions.map((q,i)=>{
+    const savedAns = mockState.answers[i];
+    const opts = q.options.map((opt,oi)=>{
+      let cls="opt";
+      if(mockState.submitted){
+        if(oi===q.answer) cls+=" correct";
+        else if(oi===savedAns && savedAns!==q.answer) cls+=" wrong";
+      }
+      return `<label class="${cls}"><input type="radio" name="mq${i}" value="${oi}" ${savedAns===oi?"checked":""} ${mockState.submitted?"disabled":""} onchange="mockSelect(${i},this.value)"> ${opt}</label>`;
+    }).join("");
+    return `<div class="qcase">
+      <div class="qcase-head"><span class="qcase-id">Q${i+1} · ${q.chTitle}</span></div>
+      <div class="qtext">${q.q}</div>
+      ${opts}
+      ${mockState.submitted ? `<div class="explain show">${q.explain}</div>` : ""}
+    </div>`;
+  }).join("");
+
+  const summary = mockState.submitted ? `
+    <div class="card exam-summary-box">
+      <div class="exam-stat"><div class="n" style="color:${passed?'var(--accent-pass)':'var(--accent-fail)'}">${correct}/${total}</div><div class="l">Score</div></div>
+      <div class="exam-stat"><div class="n">${pct}%</div><div class="l">Percentage</div></div>
+      <div class="exam-stat"><div class="n" style="color:${passed?'var(--accent-pass)':'var(--accent-fail)'}">${passed?"PASS":"FAIL"}</div><div class="l">Result (65% threshold)</div></div>
+    </div>` : "";
+
+  return `
+  <div class="topbar"><div class="console-line">TOOLS &gt; <b>mock-exam</b> &gt; RUNNING</div></div>
+  <h2 style="font-size:20px;margin-bottom:14px;">❓ Mock Exam — 10 Questions</h2>
+  ${summary}
+  <div class="card section-block">
+    ${qs}
+    <div class="assert-summary">Answered: ${answeredCount}/${total}</div>
+    <div style="display:flex;gap:10px;">
+      ${!mockState.submitted ? `<button class="btn primary" ${answeredCount<total?"disabled":""} onclick="submitMock()">Submit Exam</button>` : `<button class="btn" onclick="mockState=null;render();">Back to Mock Exams</button>`}
+      ${!mockState.submitted ? `<button class="btn" onclick="mockState=null;render();">Cancel</button>` : ""}
+    </div>
+  </div>
+  `;
+}
+
+/* ============================================================
+   RENDER: PROGRESS
+============================================================ */
+function renderProgress(){
+  const rows = CHAPTERS.map(c=>{
+    const s = chState(c.id);
+    const st = chapterStatus(c.id);
+    const last = s.lastStudied ? new Date(s.lastStudied).toLocaleDateString() : "—";
+    return `<tr>
+      <td>0${c.id} · ${c.title}</td>
+      <td><span class="badge ${st}">${statusLabel(st)}</span></td>
+      <td>${s.quizDone ? s.quizScore + "/" + c.questions.length : (Object.keys(s.quizAnswers).length + "/" + c.questions.length)}</td>
+      <td>${last}</td>
+    </tr>`;
+  }).join("");
+
+  CHAPTERS.forEach(c=>{
+    const s = chState(c.id);
+    s.quizScore = Object.keys(s.quizAnswers).filter(k=>s.quizAnswers[k]===c.questions[k].answer).length;
+  });
+
+  const overall = Math.round(passedCount()/CHAPTERS.length*100);
+
+  return `
+  <div class="topbar"><div class="console-line">ACCOUNT &gt; <b>progress</b></div></div>
+  <h2 style="font-size:20px;margin-bottom:14px;">📈 Progress</h2>
+  <div class="card hero" style="margin-bottom:18px;">
+    <div class="hero-top">
+      <div>
+        <h1 style="font-size:18px;">Overall Completion</h1>
+        <div class="sub">${passedCount()} of ${CHAPTERS.length} suites passed</div>
+      </div>
+      <div class="readout"><div class="num">${overall}%</div></div>
+    </div>
+    <div class="segbar">${CHAPTERS.map(c=>`<div class="seg ${chapterStatus(c.id)}"></div>`).join("")}</div>
+  </div>
+  <div class="card section-block">
+    <table class="progress-table">
+      <tr><th>Suite</th><th>Status</th><th>Quiz Score</th><th>Last Studied</th></tr>
+      ${rows}
+    </table>
+  </div>
+  <div style="margin-top:14px;"><button class="btn" onclick="resetProgress()">Reset All Progress</button></div>
+  `;
+}
+
+function resetProgress(){
+  if(!confirm("This will erase all chapter progress and quiz answers. Continue?")) return;
+  const chapters = {};
+  CHAPTERS.forEach(c=>{
+    chapters[c.id] = {viewedSummary:false, viewedImages:false, viewedPoints:false, quizAnswers:{}, quizDone:false, quizScore:0, completed:false, lastStudied:null};
+  });
+  STATE.chapters = chapters;
+  STATE.mockHistory = [];
+  saveState();
+  render();
+}
+
+/* ============================================================
+   RENDER: SETTINGS
+============================================================ */
+function renderSettings(){
+  const dark = (STATE.theme === "dark");
+  return `
+  <div class="topbar"><div class="console-line">ACCOUNT &gt; <b>settings</b></div></div>
+  <h2 style="font-size:20px;margin-bottom:14px;">⚙️ Settings</h2>
+  <div class="card">
+    <div class="settings-row">
+      <div>
+        <div class="s-title">Dark Mode</div>
+        <div class="s-desc">Switch the interface to a dark theme.</div>
+      </div>
+      <div class="switch ${dark?'on':''}" onclick="toggleTheme()"></div>
+    </div>
+    <div class="settings-row">
+      <div>
+        <div class="s-title">Reset All Data</div>
+        <div class="s-desc">Clears every chapter's progress, quiz answers, and mock exam history.</div>
+      </div>
+      <button class="btn small" onclick="resetProgress()">Reset</button>
+    </div>
+  </div>
+  <div class="footnote">ISTQB Study Hub · Local, offline-first · All progress is saved in this browser only.</div>
+  `;
+}
+
+function toggleTheme(){
+  STATE.theme = STATE.theme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", STATE.theme);
+  saveState();
+  render();
+}
+
+/* ============================================================
+   MASTER RENDER
+============================================================ */
+function render(){
+  const route = currentRoute();
+  let content = "";
+  let activeRoute = route;
+
+  if(route === "home"){
+    content = renderHome();
+  } else if(route.startsWith("chapter-")){
+    const id = parseInt(route.split("-")[1],10);
+    content = renderChapter(id);
+  } else if(route === "cheatsheets"){
+    content = renderCheatSheets();
+  } else if(route === "important"){
+    content = renderImportant();
+  } else if(route === "mock"){
+    content = renderMock();
+  } else if(route === "progress"){
+    content = renderProgress();
+  } else if(route === "settings"){
+    content = renderSettings();
+  } else {
+    content = renderHome();
+    activeRoute = "home";
+  }
+
+  document.getElementById("app").innerHTML = shell(content, activeRoute);
+  markActive(activeRoute);
+
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  if(menuBtn){
+    menuBtn.addEventListener("click", ()=> sidebar.classList.toggle("open"));
+  }
+  document.querySelectorAll(".nav-link").forEach(a=>{
+    a.addEventListener("click", ()=>{ if(sidebar) sidebar.classList.remove("open"); });
+  });
+
+  if(route.startsWith("chapter-")){
+    const id = parseInt(route.split("-")[1],10);
+    setTimeout(()=>markViewed(id), 400);
+  }
+}
+</script>
+</body>
+</html>
