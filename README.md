@@ -1,0 +1,1 @@
+Interactive ISTQB CTFL study dashboard built with HTML, CSS, and JavaScript, featuring chapter summaries, diagrams, practice questions, mock exams, progress tracking, dark/light mode, and local storage.
